@@ -2,10 +2,10 @@ from django.db import models
 
 
 class Team(models.Model):
-    game = models.ForeignKey("Game", on_delete=models.CASCADE)
+    game = models.ForeignKey("game.Game", on_delete=models.CASCADE)
 
-    player_1 = models.ForeignKey("Player", on_delete=models.CASCADE, related_name="player_1")
-    player_2 = models.ForeignKey("Player", on_delete=models.CASCADE, related_name="player_2")
+    player_1 = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name="player_1")
+    player_2 = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name="player_2")
     score = models.IntegerField(default=0)
 
     def __str__(self):

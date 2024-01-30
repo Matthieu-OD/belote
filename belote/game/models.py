@@ -5,13 +5,13 @@ class Game(models.Model):
     started_at = models.DateTimeField(auto_now_add=True)
     ended_at = models.DateTimeField(null=True, blank=True)
 
-    team_1 = models.ForeignKey("Team", on_delete=models.CASCADE, related_name="team_1")
-    team_2 = models.ForeignKey("Team", on_delete=models.CASCADE, related_name="team_2")
+    team_1 = models.ForeignKey("team.Team", on_delete=models.CASCADE, related_name="team_1")
+    team_2 = models.ForeignKey("team.Team", on_delete=models.CASCADE, related_name="team_2")
 
     team_1_score = models.IntegerField(default=0)
     team_2_score = models.IntegerField(default=0)
 
-    winner = models.ForeignKey("Team", on_delete=models.CASCADE, related_name="winner", null=True, blank=True)
+    winner = models.ForeignKey("team.Team", on_delete=models.CASCADE, related_name="winner", null=True, blank=True)
 
     def __str__(self):
         return f"{self.team_1} vs {self.team_2}"
@@ -34,10 +34,10 @@ class Round(models.Model):
     team_1_score = models.IntegerField(default=0)
     team_2_score = models.IntegerField(default=0)
 
-    asset_card = models.ForeignKey("Card", on_delete=models.CASCADE, null=True, blank=True)
-    asset_taker = models.ForeignKey("Player", on_delete=models.CASCADE, null=True, blank=True)
+    asset_card = models.ForeignKey("card.Card", on_delete=models.CASCADE, null=True, blank=True)
+    asset_taker = models.ForeignKey("player.Player", related_name="rounds_as_asset_taker", on_delete=models.CASCADE, null=True, blank=True)
 
-    dealer = models.ForeignKey("Player", on_delete=models.CASCADE, null=True, blank=True)
+    dealer = models.ForeignKey("player.Player", related_name="rounds_as_dealer", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"{self.team_1_score} vs {self.team_2_score}"
@@ -48,8 +48,8 @@ class Round(models.Model):
 
 class CardPlayed(models.Model):
     round = models.ForeignKey("Round", on_delete=models.CASCADE, related_name="cards_played")
-    player = models.ForeignKey("Player", on_delete=models.CASCADE, null=True, blank=True, related_name="cards_played")
-    card = models.ForeignKey("Card", on_delete=models.CASCADE)
+    player = models.ForeignKey("player.Player", on_delete=models.CASCADE, null=True, blank=True, related_name="cards_played")
+    card = models.ForeignKey("card.Card", on_delete=models.CASCADE)
     play_order = models.IntegerField()
 
     won_fold = models.BooleanField(default=False)

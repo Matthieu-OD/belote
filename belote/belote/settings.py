@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "player.apps.PlayerConfig"
+    "player.apps.PlayerConfig",
+    "game.apps.GameConfig",
+    "team.apps.TeamConfig",
+    "card.apps.CardConfig"
 ]
 
 MIDDLEWARE = [
